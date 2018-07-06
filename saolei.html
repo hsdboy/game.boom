@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .head {
+            width: 500px;
+            height: 30px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .box {
+            width: 500px;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+        .block {
+            width: 50px;
+            height: 50px;
+            background: rgba(63, 201, 28, 0.67);
+            box-shadow:0 0 0 1px #1c5b7e;
+            border-radius: 8px;
+            float: left;
+            text-align: center;
+            line-height: 49px;
+        }
+
+        .show {
+            background: url("dilei.png");
+            background-size: 100% auto;
+        }
+
+        .back {
+            background: #f2f2f2;
+        }
+
+        .flag {
+            background:url("qizi.png");
+            background-size:100% auto;
+        }
+
+        .start {
+            width: 100px;
+            height: 50px;
+            border-radius: 25px;
+            text-align: center;
+            line-height: 50px;
+            background: #f2f2f2;
+            box-shadow: 0 0 10px 5px #6c7880;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            cursor: pointer;
+        }
+
+        .choose {
+            width: 400px;
+            height: 400px;
+            background: #f2f2f2;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            border-radius: 40px;
+            box-shadow: 0 0 20px 10px #6c7880;
+            bottom: 0;
+            margin: auto;
+            display: none;
+        }
+
+        .choose div {
+            font-size: 20px;
+            text-align: center;
+            line-height: 50px;
+            border-bottom: #6c7880 1px solid;
+            cursor: pointer;
+        }
+
+        .end {
+            width: 400px;
+            height: 400px;
+            background: #f2f2f2;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            display: none;
+            border-radius: 40px;
+            box-shadow: 0 0 20px 10px #6c7880;
+        }
+
+        .end div {
+            width: 100%;
+            height:33.33%;
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+        .case{
+            color: red;
+            font-size: 30px;
+        }
+        .three{
+
+        }
+    </style>
+</head>
+<body>
+<div class="head">
+    <div class="grade"></div>
+    <div class="time"></div>
+    <div class="flagnum"></div>
+</div>
+<div class="box"></div>
+
+<div class="start">开始</div>
+<div class="choose">
+    <div class="easy">简单</div>
+    <div class="middle">中等</div>
+    <div class="hard">有点困难</div>
+    <div class="littlehard">困难</div>
+    <div class="veryhard">特别困难</div>
+    <div class="underhard">地狱困难</div>
+    <div class="nowin">你不可能赢</div>
+</div>
+
+<div class="end">
+    <div class="two"></div>
+    <div class="case"></div>
+    <div class="three">
+    <div class="restart">重新开始</div>
+    <div class="rechoose">重新选择</div>
+    </div>
+</div>
+<script src="jquery.js"></script>
+<script>
+
+    let count;
+    $(".start").on("click", function () {
+        $(this).fadeOut(100);
+        $(".choose").slideDown(500);
+    })
+    $(".choose").on("click", "div", function () {
+        if ($(this).hasClass("easy")) {
+            count = 10
+            console.log(1)
+        }
+        else if ($(this).hasClass("middle")) {
+            count = 15
+        }
+        else if ($(this).hasClass("hard")) {
+            count = 20
+        }
+        else if ($(this).hasClass("littlehard")) {
+            count = 30
+        } else if ($(this).hasClass("veryhard")) {
+            count = 40
+        } else if ($(this).hasClass("underhard")) {
+            count = 50
+        } else if ($(this).hasClass("nowin")) {
+            count = 60
+        }
+        $(".flagnum").html(count);
+        let grade = $(this).html()
+        $(".grade").html(grade);
+        creat();
+
+        $(".choose").hide();
+    })
+
+    function creat() {
+        do {
+            $(".box").empty()
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    let isbomb;
+                    if (count === 10) {
+                        isbomb = Math.random() > 0.9
+                    }
+                    else if (count === 15) {
+                        isbomb = Math.random() > 0.85
+                    }
+                    else if (count === 20) {
+                        isbomb = Math.random() > 0.8
+                    }
+                    else if (count === 30) {
+                        isbomb = Math.random() > 0.7
+                    }
+                    else if (count === 40) {
+                        isbomb = Math.random() > 0.6
+                    }
+                    else if (count === 50) {
+                        isbomb = Math.random() > 0.5
+                    }
+                    else if (count === 60) {
+                        isbomb = Math.random() > 0.4
+                    }
+
+
+                    $("<div>")
+                        .attr("id", i + "-" + j)
+                        .addClass(function () {
+                            return "block " + (isbomb ? "bomb" : "")
+                        })
+                        .appendTo($(".box"))
+                }
+            }
+        } while ($(".bomb").length !== count)
+    }
+
+    $(".box").on("click", ".block", clickhead);
+    $(".box").one("click", settime);
+    $(".box").on("contextmenu", ".block:not(.number)", rightclick);
+
+    function rightclick(e) {
+        e.preventDefault();
+        $(this).toggleClass("flag")
+
+        let flag = $(this).hasClass("flag");
+        $(".flagnum").html(function (index, oldval) {
+            return flag ? oldval - 1 : parseInt(oldval) + 1
+        })
+        if (($(".bomb").filter(".flag")).length === 10 && parseInt($(".flagnum").html()) === 0) {
+            gameover(true);
+        }
+    }
+
+    function clickhead() {
+        if ($(this).hasClass("bomb")) {
+            $(".bomb").addClass("show")
+            gameover(false);
+            return;
+        }
+
+
+        if ($(this).hasClass("number")) {
+            return;
+        }
+        if ($(this).hasClass("flag")) {
+            return;
+        }
+        $(this).addClass("number")
+        let n = 0;
+        let id = $(this).attr("id");
+        let x = parseInt(id.charAt(0))
+        let y = parseInt(id.charAt(2))
+        for (let i = x - 1; i <= x + 1; i++) {
+            for (let j = y - 1; j <= y + 1; j++) {
+                if ($("#" + i + "-" + j).hasClass("bomb")) {
+                    n++;
+                }
+            }
+        }
+        $(this).html(n).addClass("back")
+        if (n === 0) {
+            for (let i = x - 1; i <= x + 1; i++) {
+                for (let j = y - 1; j <= y + 1; j++) {
+                    let obj = $("#" + i + "-" + j);
+                    if (!obj.hasClass("number") && obj.length === 1) {
+                        clickhead.call(obj[0]);
+                    }
+                }
+            }
+        }
+    }
+
+    let t;
+
+    function settime() {
+        let time = 0;
+        t = setInterval(function () {
+            time++;
+            $(".time").html(time)
+        }, 1000)
+    }
+
+    function gameover(success) {
+        let time = $(".time").html();
+        let grade = $(".grade").html();
+        clearInterval(t)
+        $(".time").html(time)
+        $(".end").slideDown(500);
+        $(".case").html(function () {
+            return (success ? "You Win!" : "You Fail!")
+        })
+        $(".two").html("等级:" + grade + "&nbsp    用时:" + time + "s")
+
+    }
+
+
+    $(".restart").on("click", function () {
+        $(".end").hide();
+        creat();
+        clearInterval(t);
+        $(".flagnum").html(count);
+        $(".box").one("click", settime)
+        $(".time").html(0);
+    })
+    $(".rechoose").on("click", function () {
+        $(".end").hide();
+        $(".choose").slideDown(500);
+        clearInterval(t);
+        $(".box").one("click", settime)
+        $(".time").html(0);
+    })
+</script>
+</body>
+</html>
