@@ -199,14 +199,14 @@
 
     function creat() {
         if (localStorage.fast) {
-            let fast = JSON.parse(localStorage.fast);
+            fast = JSON.parse(localStorage.fast);
         }
         for (let i = 0; i < 6; i++) {
-            if (i === m && fast[i]) {
-                $(".fast").html("最短" + fast[i]);
-            }
-            else if (i === m && fast[i] === "") {
+            if (i === m && fast[i] === "") {
                 $(".fast").html("最短时间:暂无")
+            }
+            else if (i === m && fast[i]) {
+                $(".fast").html("最短" + fast[i]);
             }
         }
         do {
