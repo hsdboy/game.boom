@@ -263,7 +263,7 @@
         $(".flagnum").html(function (index, oldval) {
             return flag ? oldval - 1 : parseInt(oldval) + 1
         })
-        if (($(".bomb").filter(".flag")).length === 10 && parseInt($(".flagnum").html()) === 0) {
+        if (($(".bomb").filter(".flag")).length ===count && parseInt($(".flagnum").html()) === 0) {
             gameover(true);
         }
     }
