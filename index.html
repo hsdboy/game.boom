@@ -6,32 +6,54 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
     <style>
+        body {
+            width: 100%;
+            height: 100vh;
+            background: url("timg.jpg") no-repeat center center/cover;
+
+        }
+        .a{
+            margin-left:200px ;
+        }
+       @media (max-width: 500px)  {
+            .a{
+                margin:0 auto;
+
+            }
+        }
         .head {
-            width: 70%;
+            width: 350px;
             height: 100px;
-            margin: 0 auto;
-            display: flex;
             align-items: center;
             justify-content: space-between;
             cursor: pointer;
+            background: rgba(28, 78, 110, 0.03);
+            display: none;
+            color: white;
         }
 
         .box {
             width: 350px;
             height: 350px;
-            margin: 0 auto;
+            background: url("back.jpg") no-repeat center center /cover;
+            display: none;
         }
 
         .block {
             width: 35px;
             height: 35px;
             background: rgba(63, 201, 28, 0.67);
-            box-shadow: 0 0 0 1px #1c5b7e;
-            border-radius: 8px;
+            box-shadow: 0 0 0 1px #05671a;
+            border-radius: 2px;
             float: left;
             text-align: center;
             line-height: 35px;
+        }
+
+        .block:not(.number):not(.flag):hover {
+            background: rgba(60, 193, 28, 0.92);
         }
 
         .show {
@@ -40,7 +62,7 @@
         }
 
         .back {
-            background: #f2f2f2;
+            background: rgba(242, 242, 242, 0.4);
         }
 
         .flag {
@@ -68,7 +90,7 @@
         .choose {
             width: 80%;
             height: 400px;
-            background: #f2f2f2;
+            background: rgba(242, 242, 242, 0.38);
             position: fixed;
             left: 0;
             top: 0;
@@ -88,10 +110,14 @@
             cursor: pointer;
         }
 
+        .choose div:hover {
+            background: rgba(108, 120, 128, 0.44);
+        }
+
         .end {
             width: 80%;
             height: 400px;
-            background: #f2f2f2;
+            background: rgba(242, 242, 242, 0.58);
             position: absolute;
             left: 0;
             top: 0;
@@ -116,12 +142,10 @@
             font-size: 30px;
         }
 
-        .three {
-
-        }
     </style>
 </head>
 <body>
+<div class="a">
 <div class="head">
     <div class="grade"></div>
     <div class="time"></div>
@@ -129,7 +153,7 @@
     <div class="fast"></div>
 </div>
 <div class="box"></div>
-
+</div>
 <div class="start">开始</div>
 <div class="choose">
     <div class="easy">简单</div>
@@ -198,6 +222,9 @@
     })
 
     function creat() {
+        $(".box").show(500);
+        $(".head").show(500).css("display", "flex");
+        $(".time").html("时间:0").width("25%")
         if (localStorage.fast) {
             fast = JSON.parse(localStorage.fast);
         }
@@ -263,7 +290,7 @@
         $(".flagnum").html(function (index, oldval) {
             return flag ? oldval - 1 : parseInt(oldval) + 1
         })
-        if (($(".bomb").filter(".flag")).length ===count && parseInt($(".flagnum").html()) === 0) {
+        if (($(".bomb").filter(".flag")).length === count && parseInt($(".flagnum").html()) === 0) {
             gameover(true);
         }
     }
@@ -274,8 +301,6 @@
             gameover(false);
             return;
         }
-
-
         if ($(this).hasClass("number")) {
             return;
         }
@@ -283,6 +308,7 @@
             return;
         }
         $(this).addClass("number")
+
         let n = 0;
         let id = $(this).attr("id");
         let x = parseInt(id.charAt(0))
@@ -305,6 +331,8 @@
                 }
             }
         }
+
+
     }
 
     let t;
